@@ -7,7 +7,7 @@
     "server": "nodemon index.js",
     "build-client": "cd client && npm install && npm run build",
     "setup-production": "npm run build-client && npm install",
-    "start": "nodemon index.js"
+    "start": "setup-production && nodemon index.js"
   },
   "keywords": [],
   "author": "",
