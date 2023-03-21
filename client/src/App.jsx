@@ -12,7 +12,7 @@ function App() {
     e.preventDefault();
     setLoading(true);
     const response = await axios.post(
-      "http://localhost:5000/api/prompt",
+      "https://chat-ai-jpf3.onrender.com/api/prompt",
       { prompt },
       {
         headers: {
