@@ -2,9 +2,9 @@ const express = require("express");
 const { Configuration, OpenAIApi } = require("openai")
 const cors = require("cors");
 require("dotenv").config({ path: "./.env" });
-const { fileUrlToPath } = require("node:url");
 const API_KEY = process.env.AI_KEY;
 const path = require("path");
+
 // Setup OPEN AI
 const configuration = new Configuration({
     apiKey: API_KEY
@@ -17,8 +17,8 @@ app.use(cors());
 app.use(express.json());
 
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static("./client/dist"))
-    const indexPath = path.resolve(__dirname, './client/dist', 'index.html');
+    app.use(express.static("./client/build"))
+    const indexPath = path.resolve(__dirname, './client/build', 'index.html');
     app.get('*', (req, res) => res.sendFile(indexPath));
 }
 
@@ -29,7 +29,7 @@ const postPrompt = async (req, res) => {
             model: "gpt-3.5-turbo",
             messages: [{ role: "user", content: prompt }]
         })
-
+        console.log({ prompt });
         const response = completion.data.choices[0].message;
         res.status(200).json(response);
     } catch (error) {

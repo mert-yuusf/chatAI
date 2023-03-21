@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
+import sound from "./chat-sound.mp3";
+
 function App() {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [chat, setChat] = useState([]);
-
+  const audio = new Audio(sound);
+  audio.loop = false;
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -14,7 +16,7 @@ function App() {
       { prompt },
       {
         headers: {
-          "Content-Type": "Application/JSON",
+          "Content-Type": "application/json",
         },
       }
     );
@@ -22,6 +24,7 @@ function App() {
 
     chat.push({ user: prompt, assistant: data });
     setPrompt("");
+    audio.play();
     setLoading(false);
   };
 
